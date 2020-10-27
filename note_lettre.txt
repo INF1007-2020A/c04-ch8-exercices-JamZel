@@ -1,0 +1,29 @@
+Note:100
+, Pourcentage en lettre: A*
+Note:80
+, Pourcentage en lettre: A
+Note:79
+, Pourcentage en lettre: B+
+Note:55
+, Pourcentage en lettre: C
+Note:45
+, Pourcentage en lettre: F
+Note:98
+, Pourcentage en lettre: F
+Note:94
+, Pourcentage en lettre: A*
+Note:85
+, Pourcentage en lettre: A
+Note:87
+, Pourcentage en lettre: B+
+Note:81
+, Pourcentage en lettre: B
+Note:78
+, Pourcentage en lettre: C+
+Note:71
+, Pourcentage en lettre: F
+Note:68
+, Pourcentage en lettre: C
+Note:90
+, Pourcentage en lettre: B
+Note:47, Pourcentage en lettre: F
