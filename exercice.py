@@ -34,7 +34,7 @@ def exo3(le_fichier):
             note = int(ligne)
             for i in PERCENTAGE_TO_LETTER:
                 if note in range(PERCENTAGE_TO_LETTER[i][0], PERCENTAGE_TO_LETTER[i][1]):
-                    ABCD.write(f"Note:{notes.readline()}, Pourcentage en lettre: {i}\n")
+                    ABCD.write(f"Note:{notes.readline().strip()}, Pourcentage en lettre: {i}\n")
 
 
 exo3("notes.txt")
