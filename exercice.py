@@ -1,46 +1,88 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-
 PERCENTAGE_TO_LETTER = {"A*": [95, 101], "A": [90, 95], "B+": [85, 90], "B": [80, 85], "C+": [75, 80], "C": [70, 75], "F": [0, 70]}
 
 # TODO: Importez vos modules ici
-
+import json
+from recettes import *
 
 # TODO: Définissez vos fonction ici
-def exo1(fichier_1, fichier_2):
-    with open(fichier_1, "r", encoding="utf-8") as f_1, open(fichier_2, "r", encoding="utf-8") as f_2:
-        x = f_1.readlines()
-        y = f_2.readlines()
-        for i in x:
-            for j in y:
-                if i != j:
-                    print(f"diff {i} {j}")
+def difference(file_1, file_2):
+    with open(f"./Files_needed/{file_1}", 'r', encoding='utf-8') as first_file,\
+         open(f"./Files_needed/{file_2}", 'r', encoding='utf-8') as second_file:
+        for row in first_file:
+            for ligne in second_file:
+                if row != ligne:
+                    return print("Il y a une différence entre les deux fichiers au niveau de ces deux lignes:\n\n"
+                                 f"Ligne du fichier {file_1}:\n"
+                                 f"{row}\n"
+                                 f"Ligne du fichier {file_2}:\n"
+                                 f"{ligne}")
+                break
+
+
+
+def its_a_triple(file):
+    with open(f"./Files_needed/{file}", 'r', encoding='utf-8') as reading_file,\
+         open("./Files_needed/triple_space.txt", "w", encoding='utf-8') as writing_file:
+
+        for row in reading_file:
+            for char in row:
+                if char != ' ':
+                    writing_file.write(char)
+                else:
+                    writing_file.write('   ')
+
+
+def grades():
+    with open("./Files_needed/notes.txt", 'r', encoding='utf-8') as grade,\
+         open("./Files_needed/notes_lettre.txt", 'w', encoding='utf_8') as letter:
+
+        for row in grade:
+            for key, value in PERCENTAGE_TO_LETTER.items():
+                if value[0] < int(row) <= value[1]:
+                    letter.write(f"{row.strip()} {key}\n")
                     break
                 else:
-                    print("papa")
-
-def exo2(ancien_fichier):
-    with open(ancien_fichier, encoding="utf-8") as origin, open("espace.txt", "w", encoding="utf-8") as copy:
-        contenu = origin.read()
-        for i in contenu:
-            if i == " ":
-                copy.write("   ")
-            else:
-                copy.write(i)
-
-def exo3(le_fichier):
-    with open(le_fichier, encoding="utf-8") as notes, open("note_lettre.txt", "w", encoding="utf-8") as ABCD:
-        for ligne in notes:
-            note = int(ligne)
-            for i in PERCENTAGE_TO_LETTER:
-                if note in range(PERCENTAGE_TO_LETTER[i][0], PERCENTAGE_TO_LETTER[i][1]):
-                    ABCD.write(f"Note:{notes.readline().strip()}, Pourcentage en lettre: {i}\n")
+                    continue
 
 
-exo3("notes.txt")
+def recette():
+    with open("./Files_needed/recettes.json", 'a+', encoding='utf-8') as file:
+        recipe = json.load(file)
+
+        while True:
+            user_input = input("Veuillez selectionner une option:\n"
+                  "1) Ajouter une recette\n"
+                  "2) Consulter les recettes\n"
+                  "3) Supprimer une recette\n"
+                  "4) Quitter\n")
+
+            if user_input == "1":
+                    recipe = add_recipes(recipe)
+                    json.dump(recipe, file)
+
+            if user_input == "2":
+                print(recipe)
+
+            if user_input == "3":
+                while True:
+                    supr = input("Entrer le nom de la recette:")
+                    if supr in recipe:
+                        del recipe[supr]
+                        print(f"La recette {supr} a été supprimée")
+                        json.dump(recipe, file)
+                        break
+                    else:
+                        print(f"La recette {supr} n'existe pas, veuillez consulter les recettes disponibles")
+
+            if user_input == "4":
+                print("Bye")
+                break
+
 
 if __name__ == '__main__':
     # TODO: Appelez vos fonctions ici
-    #exo1("exemple.txt", "le1.txt")
-    #exo2("exemple.txt")
+    difference('exemple.txt', 'comparaison.txt')
+    its_a_triple('exemple.txt')
+    grades()
+    recette()
     pass
