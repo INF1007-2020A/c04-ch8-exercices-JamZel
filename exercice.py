@@ -3,6 +3,7 @@ PERCENTAGE_TO_LETTER = {"A*": [95, 101], "A": [90, 95], "B+": [85, 90], "B": [80
 # TODO: Importez vos modules ici
 import json
 from recettes import *
+from os import path
 
 # TODO: Définissez vos fonction ici
 def difference(file_1, file_2):
@@ -46,37 +47,40 @@ def grades():
 
 
 def recette():
-    with open("./Files_needed/recettes.json", 'a+', encoding='utf-8') as file:
-        recipe = json.load(file)
+    if path.exists("./Files_needed/recettes.json"):
+        with open("./Files_needed/recettes.json", 'r') as file:
+            recipe = json.load(file)
+    else:
+        recipe = {}
 
-        while True:
-            user_input = input("Veuillez selectionner une option:\n"
-                  "1) Ajouter une recette\n"
-                  "2) Consulter les recettes\n"
-                  "3) Supprimer une recette\n"
-                  "4) Quitter\n")
+    while True:
+        user_input = input("Veuillez selectionner une option:\n"
+                           "1) Ajouter une recette\n"
+                           "2) Consulter les recettes\n"
+                           "3) Supprimer une recette\n"
+                           "4) Quitter\n")
 
-            if user_input == "1":
-                    recipe = add_recipes(recipe)
-                    json.dump(recipe, file)
+        if user_input == "1":
+            recipe = add_recipes(recipe)
+            json.dump(recipe, open("./Files_needed/recettes.json", 'w'))
 
-            if user_input == "2":
-                print(recipe)
+        if user_input == "2":
+            print(recipe)
 
-            if user_input == "3":
-                while True:
-                    supr = input("Entrer le nom de la recette:")
-                    if supr in recipe:
-                        del recipe[supr]
-                        print(f"La recette {supr} a été supprimée")
-                        json.dump(recipe, file)
-                        break
-                    else:
-                        print(f"La recette {supr} n'existe pas, veuillez consulter les recettes disponibles")
+        if user_input == "3":
+            while True:
+                supr = input("Entrer le nom de la recette:\n")
+                if supr in recipe:
+                    del recipe[supr]
+                    print(f"La recette {supr} a été supprimée")
+                    json.dump(recipe, open("./Files_needed/recettes.json", 'w'))
+                    break
+                else:
+                    print(f"La recette {supr} n'existe pas, veuillez consulter les recettes disponibles")
 
-            if user_input == "4":
-                print("Bye")
-                break
+        if user_input == "4":
+            print("Bye")
+            break
 
 
 if __name__ == '__main__':
