@@ -83,10 +83,31 @@ def recette():
             break
 
 
+def nombre(file):
+    with open(f"./Files_needed/{file}", 'r', encoding='utf-8') as file:
+        return sorted([float(i) for row in file
+                       for i in row.split() if i.isnumeric()])
+
+
+def half_life(file):
+    count = 0
+    with open(f"./Files_needed/{file}", 'r', encoding='utf-8') as file, \
+            open(f"./Files_needed/Life.txt", 'w', encoding='utf-8') as krilin:
+
+        for row in file:
+            if count % 2 == 0:
+                krilin.write(row)
+                count += 1
+            else:
+                count += 1
+
+
 if __name__ == '__main__':
     # TODO: Appelez vos fonctions ici
     difference('exemple.txt', 'comparaison.txt')
     its_a_triple('exemple.txt')
     grades()
     recette()
+    print(nombre("exemple.txt"))
+    half_life("Half.txt")
     pass
